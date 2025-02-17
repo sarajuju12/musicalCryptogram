@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-musicalCryptogram
-=======
 Musical Cryptogram
 
 Course: CS 489 - Computational Audio
@@ -12,4 +9,3 @@ Team Members:
 
 Third party sources used:
 - PythonPiano by LeMaster Tech (Youtube) /  (GitHub): https://github.com/plemaster01/PythonPiano
->>>>>>> ec17b44 (initialize project)

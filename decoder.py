@@ -13,6 +13,12 @@ class Decoder:
 
     def read_wav(self):
         audio_data, sample_rate = sf.read(self.file_path)
+        # Convert to mono if stereo
+        if len(audio_data.shape) > 1:
+            audio_data = np.mean(audio_data, axis=1)
+
+        # Remove DC offset
+        audio_data -= np.mean(audio_data)
         self.audio_data = audio_data
         self.sample_rate = sample_rate
 

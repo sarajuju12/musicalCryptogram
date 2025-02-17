@@ -8,4 +8,4 @@ Team Members:
 - Juliette Xu: 20897674
 
 Third party sources used:
-- PythonPiano by LeMaster Tech (Youtube) /  (GitHub): https://github.com/plemaster01/PythonPiano
+- PythonPiano by LeMaster Tech (Youtube) / plemaster01 (GitHub): https://github.com/plemaster01/PythonPiano

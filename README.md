@@ -1,7 +1,9 @@
 Musical Cryptogram
 
 Course: CS 489 - Computational Audio
+
 Project: Musical Cryptogram
+
 Team Members: 
 - Aditya Srinivasan Mani: 20891249
 - Jasmine Nadine Wahrhaftig: 20894794

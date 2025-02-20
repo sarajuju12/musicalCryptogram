@@ -33,8 +33,7 @@ class Decoder:
         audio_data, sample_rate = sf.read(self.file_path)
 
         # Convert from stereo to mono
-        if len(audio_data.shape) > 1:
-            audio_data = np.mean(audio_data, axis=1)
+        audio_data = np.mean(audio_data, axis=1)
 
         # Remove DC offset
         audio_data -= np.mean(audio_data)
@@ -50,16 +49,10 @@ class Decoder:
         pos_fft = np.abs(fft_data[:len(fft_data) // 2])
 
         # Compute the average magnitude of frequencies above a set magnitude
-        filtered_magnitudes_first = pos_fft[pos_fft > 1] # first pass
-        avg_magnitude = np.mean(filtered_magnitudes_first)
-        print(f"Average Magnitude: {avg_magnitude:.2f}")
-
-        filtered_magnitudes_second = pos_fft[pos_fft > avg_magnitude * 2] # second pass
-        avg_magnitude = np.mean(filtered_magnitudes_second)
-        print(f"Average Magnitude: {avg_magnitude:.2f}")
+        magnitude_threshold = 10
         
         # Get all frequencies that surpass the threshold
-        above_threshold_idx = np.where(pos_fft > avg_magnitude)[0]
+        above_threshold_idx = np.where(pos_fft > magnitude_threshold)[0]
         peak_freqs = pos_freq[above_threshold_idx]
         print(peak_freqs)
 

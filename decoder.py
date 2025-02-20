@@ -64,7 +64,7 @@ class Decoder:
         plt.show()
 
     def play_note(self):
-        sd.play(self.audio_data, self.sample_rate) # lowest note: F
+        sd.play(self.audio_data, self.sample_rate)
 
 
 #for key in piano_note_frequencies:

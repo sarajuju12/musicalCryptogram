@@ -44,10 +44,10 @@ class Decoder:
         pos_fft = np.abs(fft_data[:len(fft_data) // 2])
 
         # Compute the average magnitude of frequencies above a set magnitude
-        magnitude_threshold = 65
-        
+        threshold = 65
+
         # Get all frequencies that surpass the threshold
-        above_threshold_idx = np.where(pos_fft > magnitude_threshold)[0]
+        above_threshold_idx = np.where(pos_fft > threshold)[0]
         peak_freqs = pos_freq[above_threshold_idx]
         print(peak_freqs)
 

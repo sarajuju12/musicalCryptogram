@@ -3,14 +3,14 @@ import numpy as np
 import wave
 import io
 import os
+from assets.key_mappings import key_mappings
 
-def generate_silence(duration, sample_rate):
-    """Generate a silent waveform for the given duration."""
+# Generate a silent waveform (pause) for the given duration
+def generate_pause(duration, sample_rate):
     num_samples = int(sample_rate * duration)
     return np.zeros(num_samples, dtype=np.int16)
 
-
-# Function to encode text into musical notes (mapping #1)
+# Function to encode text into musical notes, given a mapping dict
 def text_to_wav(text, dict):
     
     sample_rate = 44100
@@ -20,16 +20,17 @@ def text_to_wav(text, dict):
 
     for char in text:
         
-        if char == " ":  # Space should be a quarter note rest
-            audio_data.append(generate_silence(0.5, sample_rate))
+        if char == " ":  # Space mapped to a quarter note rest
+            audio_data.append(generate_pause(0.5, sample_rate))
 
         note_file = dict.get(char.lower())  # Convert to lowercase for consistency
+
         if note_file:
+            # Path to .wav file
             file_path = os.path.join("assets/notes", note_file + ".wav")
             try:
                 with wave.open(file_path, 'rb') as wav_file:
-                    # frames = wav_file.readframes(wav_file.getnframes())
-                    frame_count = int(sample_rate * 0.25) # duration of 8th note
+                    frame_count = int(sample_rate * 0.25) # duration of 16th note
                     frames = wav_file.readframes(frame_count)
                     audio_data.append(np.frombuffer(frames, dtype=np.int16))
             except FileNotFoundError:
@@ -41,7 +42,7 @@ def text_to_wav(text, dict):
     # Concatenate all loaded sounds
     final_audio = np.concatenate(audio_data)
 
-        # Write to a new WAV file
+     # Write to a new WAV file
     with wave.open(buffer, 'wb') as wav_file:
         wav_file.setnchannels(1)
         wav_file.setsampwidth(2)  # 16-bit audio
@@ -69,18 +70,7 @@ if mode == "Encode Text to WAV":
     text = st.text_area("Enter text to encode:")
     if st.button("Generate WAV"):
         if text:
-            if key == "C-G-Am-F":
-                dict = {"a": "C3", "b": "D3", "c": "E3", "d": "F3", "e": "G3", "f": "A3", "g": "B3", "h": "C4",
-                        "i": "D4", "j": "E4", "k": "F4", "l": "G4", "m": "A4", "n": "B4", "o": "C5", "p": "D5",
-                        "q": "E5", "r": "F5", "s": "G5", "t": "A5", "u": "B5", "v": "C6", "w": "D6", "x": "E6", "y": "F6", "z": "G6"}
-            elif key == "C-F-G-E":
-                dict = {"a": "C4", "b": "E5", "c": "A5", "d": "G3", "e": "D4", "f": "E3", "g": "Ab4", "h": "B4",
-                        "i": "F3", "j": "C3", "k": "D3", "l": "B5", "m": "Ab5", "n": "F4", "o": "G5", "p": "B6",
-                        "q": "G6", "r": "C5", "s": "E4", "t": "F5", "u": "D5", "v": "A4", "w": "E6", "x": "F6", "y": "C6", "z": "G4"}
-            elif key == "Cm-Gm-Dm-Am":
-                dict = {"a": "D4", "b": "Bb6", "c": "Eb5", "d": "F4", "e": "E3", "f": "C4", "g": "D5", "h": "Bb5",
-                        "i": "G5", "j": "A6", "k": "E4", "l": "F5", "m": "F6", "n": "D6", "o": "C5", "p": "Eb6",
-                        "q": "Eb3", "r": "G4", "s": "A5", "t": "E5", "u": "C6", "v": "A4", "w": "C3", "x": "Bb4", "y": "G3", "z": "Eb4"}
+            dict = key_mappings.get(key)
             wav_data = text_to_wav(text, dict)
             st.audio(wav_data, format="audio/wav")
             st.download_button("Download WAV", wav_data, "encoded_audio.wav", "audio/wav")

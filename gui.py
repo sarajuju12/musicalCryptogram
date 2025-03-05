@@ -26,15 +26,30 @@ def text_to_wav(text, dict):
         note_file = dict.get(char.lower())  # Convert to lowercase for consistency
 
         if note_file:
-            # Path to .wav file
-            file_path = os.path.join("assets/notes", note_file + ".wav")
-            try:
-                with wave.open(file_path, 'rb') as wav_file:
-                    frame_count = int(sample_rate * 0.25) # duration of 16th note
-                    frames = wav_file.readframes(frame_count)
-                    audio_data.append(np.frombuffer(frames, dtype=np.int16))
-            except FileNotFoundError:
-                print(f"Warning: Missing file {file_path}, skipping {char}")
+            chord_audio = None
+    
+            for note in note_file:
+                # Path to .wav file
+                file_path = os.path.join("assets/notes", note + ".wav")
+                try:
+                    with wave.open(file_path, 'rb') as wav_file:
+                        frame_count = int(sample_rate * 0.25) # duration of 16th note
+                        frames = wav_file.readframes(frame_count)
+                        #audio_data.append(np.frombuffer(frames, dtype=np.int16))
+                        note_audio = np.frombuffer(frames, dtype=np.int16)
+
+                        if chord_audio is None:
+                            chord_audio = note_audio
+                        else:
+                            chord_audio += note_audio
+                        
+                        chord_audio = np.clip(chord_audio, -32768, 32767)
+                        
+                except FileNotFoundError:
+                    print(f"Warning: Missing file {file_path}, skipping {char}")
+
+            if chord_audio is not None:
+                audio_data.append(chord_audio)
 
     if not audio_data:
         raise ValueError("No valid audio data found.")
@@ -66,7 +81,7 @@ st.title("🎵 Musical Text Encoder & Decoder")
 mode = st.radio("Choose Mode:", ["Encode Text to WAV", "Decode WAV to Text"])
 
 if mode == "Encode Text to WAV":
-    key = st.selectbox("Choose Encryption Key:", ["C-G-Am-F", "C-F-G-E", "Cm-Gm-Dm-Am"])
+    key = st.selectbox("Choose Encryption Key:", ["C-G-Am-F", "C-F-G-E", "Cm-Gm-Dm-Am", "Chord_1"])
     text = st.text_area("Enter text to encode:")
     if st.button("Generate WAV"):
         if text:
@@ -83,3 +98,9 @@ elif mode == "Decode WAV to Text":
         wav_data = uploaded_file.read()
         decoded_text = wav_to_text(wav_data)
         st.text_area("Decoded Text:", decoded_text, height=100)
+
+
+# troubles so far
+# combining notes to make a chord lead to a high-pitched shrill sound
+# used + instead of np.sum, works but believe experiencing clipping noise (may need to normalize)
+# idea: lower decibel levels of each note, once everything is combined, normalize it

@@ -77,6 +77,10 @@ if mode == "Encode Text to WAV":
                 dict = {"a": "C4", "b": "E5", "c": "A5", "d": "G3", "e": "D4", "f": "E3", "g": "Ab4", "h": "B4",
                         "i": "F3", "j": "C3", "k": "D3", "l": "B5", "m": "Ab5", "n": "F4", "o": "G5", "p": "B6",
                         "q": "G6", "r": "C5", "s": "E4", "t": "F5", "u": "D5", "v": "A4", "w": "E6", "x": "F6", "y": "C6", "z": "G4"}
+            elif key == "Cm-Gm-Dm-Am":
+                dict = {"a": "D4", "b": "Bb6", "c": "Eb5", "d": "F4", "e": "E3", "f": "C4", "g": "D5", "h": "Bb5",
+                        "i": "G5", "j": "A6", "k": "E4", "l": "F5", "m": "F6", "n": "D6", "o": "C5", "p": "Eb6",
+                        "q": "Eb3", "r": "G4", "s": "A5", "t": "E5", "u": "C6", "v": "A4", "w": "C3", "x": "Bb4", "y": "G3", "z": "Eb4"}
             wav_data = text_to_wav(text, dict)
             st.audio(wav_data, format="audio/wav")
             st.download_button("Download WAV", wav_data, "encoded_audio.wav", "audio/wav")

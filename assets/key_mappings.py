@@ -48,10 +48,70 @@ Chord_1 = {
     "z": ["G6", "B6", "D7"],  # G Major Chord
 }
 
+Chord_2 = { 
+    "a": ["C4", "E4", "G4"], # C Major Chord 
+    "b": ["E5", "Ab5", "B5"], # E Major Chord
+    "c": ["A5", "C6", "F6"], # F Major Chord 
+    "d": ["G3", "B3", "D4"], # G Major Chord
+    "e": ["D4", "G4", "B4"], # G Major Chord
+    "f": ["E3", "Ab3", "B3"],  # E Major Chord
+    "g": ["Ab4", "B4", "E5"], # E Major Chord
+    "h": ["B4", "D5", "G5"], # G Major Chord
+    "i": ["F3", "A3", "C4"],  # F Major Chord
+    "j": ["C3", "F3", "A3"], # F Major Chord  
+    "k": ["D3", "G3", "B3"], # G Major Chord
+    "l": ["B5", "E6", "Ab6"], # E Major Chord
+    "m": ["Ab5", "B5", "E6"], # E Major Chord
+    "n": ["F4", "A4", "C5"], # F Major Chord
+    "o": ["G5", "C6", "E6"], # C Major Chord 
+    "p": ["B3", "D4", "G4"], # G Major Chord
+    "q": ["D6", "G6", "B6"], # C Major Chord 
+    "r": ["C5", "E5", "G5"], # C Major Chord
+    "s": ["E4", "G4", "C5"], # C Major Chord
+    "t": ["F5", "A5", "C6"], # F Major Chord
+    "u": ["D5", "G5", "B5"], # G Major Chord
+    "v": ["A4", "C6", "F6"], # F Major Chord
+    "w": ["E6", "Ab6", "B6"], # E Major Chord
+    "x": ["A3", "C4", "F4"], # F Major Chord 
+    "y": ["C6", "E6", "G6"], # C Major Chord
+    "z": ["G4", "B4", "D5"], # G Major Chord
+}
+
+# combination of notes and chords?
+
+# Chord_template = {
+#     "a": [], 
+#     "b": [],  
+#     "c": [], 
+#     "d": [], 
+#     "e": [], 
+#     "f": [],  
+#     "g": [],  
+#     "h": [],  
+#     "i": [],  
+#     "j": [],  
+#     "k": [],
+#     "l": [], 
+#     "m": [],  
+#     "n": [], 
+#     "o": [],  
+#     "p": [], 
+#     "q": [], 
+#     "r": [],  
+#     "s": [],  
+#     "t": [],
+#     "u": [],  
+#     "v": [],  
+#     "w": [],  
+#     "x": [],  
+#     "y": [],  
+#     "z": [], 
+# }
 
 key_mappings = {
     "C-G-Am-F": C_G_Am_F,
     "C-F-G-E": C_F_G_E,
     "Cm-Gm-Dm-Am": Cm_Gm_Dm_Am,
-    "Chord_1": Chord_1
+    "Chord_1": Chord_1,
+    "Chord_2": Chord_2
 }

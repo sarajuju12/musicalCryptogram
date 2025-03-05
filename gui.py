@@ -81,7 +81,7 @@ st.title("🎵 Musical Text Encoder & Decoder")
 mode = st.radio("Choose Mode:", ["Encode Text to WAV", "Decode WAV to Text"])
 
 if mode == "Encode Text to WAV":
-    key = st.selectbox("Choose Encryption Key:", ["C-G-Am-F", "C-F-G-E", "Cm-Gm-Dm-Am", "Chord_1"])
+    key = st.selectbox("Choose Encryption Key:", ["C-G-Am-F", "C-F-G-E", "Cm-Gm-Dm-Am", "Chord_1", "Chord_2"])
     text = st.text_area("Enter text to encode:")
     if st.button("Generate WAV"):
         if text:
@@ -104,3 +104,7 @@ elif mode == "Decode WAV to Text":
 # combining notes to make a chord lead to a high-pitched shrill sound
 # used + instead of np.sum, works but believe experiencing clipping noise (may need to normalize)
 # idea: lower decibel levels of each note, once everything is combined, normalize it
+
+# Need to do
+# create two other chords
+# lower decibel levels + normalize

@@ -76,7 +76,7 @@ def wav_to_text(wav_data):
 # Streamlit UI
 st.set_page_config(page_title="Musical Text Encoder/Decoder", layout="centered")
 
-st.title("🎵 Musical Text Encoder & Decoder")
+st.title("🎵 CryptTunes: A Musical Text Encoder & Decoder")
 
 mode = st.radio("Choose Mode:", ["Encode Text to WAV", "Decode WAV to Text"])
 

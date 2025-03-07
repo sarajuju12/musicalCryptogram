@@ -20,7 +20,7 @@ def text_to_wav(text, dict):
 
     for char in text:
         
-        if char == " ":  # Space mapped to a quarter note rest
+        if char == " ":  # Space mapped to an eighth note rest
             audio_data.append(generate_pause(0.5, sample_rate))
 
         note_file = dict.get(char.lower())  # Convert to lowercase for consistency
@@ -35,7 +35,6 @@ def text_to_wav(text, dict):
                     with wave.open(file_path, 'rb') as wav_file:
                         frame_count = int(sample_rate * 0.25) # duration of 16th note
                         frames = wav_file.readframes(frame_count)
-                        #audio_data.append(np.frombuffer(frames, dtype=np.int16))
                         note_audio = np.frombuffer(frames, dtype=np.int16)
 
                         if chord_audio is None:

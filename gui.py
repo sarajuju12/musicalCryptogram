@@ -31,10 +31,10 @@ def text_to_wav(text, dict):
 
             for note in note_file:
                 # Path to .wav file
-                file_path = os.path.join("assets/notes", note + ".wav")
+                file_path = os.path.join("assets/notes_flattened", note + ".wav")
                 try:
                     with wave.open(file_path, 'rb') as wav_file:
-                        frame_count = int(sample_rate * 0.25)  # duration of 16th note
+                        frame_count = int(sample_rate * 0.5)  # duration of 16th note
                         frames = wav_file.readframes(frame_count)
                         note_audio = np.frombuffer(frames, dtype=np.int16)
 

@@ -21,31 +21,31 @@ Cm_Gm_Dm_Am = {
 
 Chord_1 = {
     "a": ["C3", "E3", "G3"],  # C Major Chord
-    "b": ["G3", "B3", "D4"],  # G Major Chord
+    "b": ["D3", "G4", "B4"],  # G Major Chord
     "c": ["A3", "C4", "E4"],  # A Minor Chord
     "d": ["F3", "A3", "C4"],  # F Major Chord
-    "e": ["C3", "E3", "G3"],  # C Major Chord
-    "f": ["G3", "B3", "D4"],  # G Major Chord
-    "g": ["A3", "C4", "E4"],  # A Minor Chord
-    "h": ["F3", "A3", "C4"],  # F Major Chord
-    "i": ["C4", "E4", "G4"],  # C Major Chord
-    "j": ["G4", "B4", "D5"],  # G Major Chord
-    "k": ["A4", "C5", "E5"],  # A Minor Chord
-    "l": ["F4", "A4", "C5"],  # F Major Chord
-    "m": ["C4", "E4", "G4"],  # C Major Chord
-    "n": ["G4", "B4", "D5"],  # G Major Chord
-    "o": ["A4", "C5", "E5"],  # A Minor Chord
-    "p": ["F4", "A4", "C5"],  # F Major Chord
-    "q": ["C5", "E5", "G5"],  # C Major Chord
-    "r": ["G5", "B5", "D6"],  # G Major Chord
-    "s": ["A5", "C6", "E6"],  # A Minor Chord
-    "t": ["F5", "A5", "C6"],  # F Major Chord
-    "u": ["C5", "E5", "G5"],  # C Major Chord
-    "v": ["G5", "B5", "D6"],  # G Major Chord
-    "w": ["A5", "C6", "E6"],  # A Minor Chord
-    "x": ["F5", "A5", "C6"],  # F Major Chord
-    "y": ["C6", "E6", "G6"],  # C Major Chord
-    "z": ["G6", "B6", "D7"],  # G Major Chord
+    "e": ["G3", "C4", "E4"],  # C Major Chord
+    "f": ["B3", "D4", "G4"],  # G Major Chord
+    "g": ["E3", "A4", "C4"],  # A Minor Chord
+    "h": ["C4", "E4", "G4"],  # C Major Chord
+    "i": ["D4", "G4", "B4"],  # G Major Chord
+    "j": ["A4", "C5", "E5"],  # A Minor Chord
+    "k": ["F4", "A4", "C5"],  # F Major Chord
+    "l": ["G4", "C5", "E5"],  # C Major Chord
+    "m": ["B4", "D5", "G5"],  # G Major Chord
+    "n": ["E4", "A4", "C5"],  # A Minor Chord
+    "o": ["C5", "E5", "G5"],  # C Major Chord
+    "p": ["D5", "G5", "B5"],  # G Major Chord
+    "q": ["A5", "C6", "E6"],  # A Minor Chord
+    "r": ["F5", "A5", "C6"],  # F Major Chord
+    "s": ["G5", "C6", "E6"],  # C Major Chord
+    "t": ["B5", "D6", "G6"],  # G Major Chord
+    "u": ["E5", "A5", "C6"],  # A Minor Chord
+    "v": ["C6", "E6", "G6"],  # C Major Chord
+    "w": ["D6", "G6", "B6"],  # G Major Chord
+    "x": ["A6", "C7", "E7"],  # A Minor Chord
+    "y": ["F6", "A6", "C7"],  # F Major Chord
+    "z": ["F2", "A2", "C3"],  # F Major Chord
 }
 
 Chord_2 = { 

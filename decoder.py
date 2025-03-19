@@ -6,6 +6,7 @@ import sounddevice as sd
 import soundfile as sf
 from scipy import fft
 from scipy.fft import ifft
+from assets.key_mappings import key_mappings
 
 piano_note_frequencies = {'Db2': 69.2957, 'D2': 73.4162, 'Eb2': 77.7817, 'E2': 82.4069, 'F2': 87.3071, 'Gb2': 92.4986,
                           'G2': 97.9989, 'Ab2': 103.826, 'A2': 110.000, 'Bb2': 116.541, 'B2': 123.471, 'C3': 130.813,
@@ -80,21 +81,21 @@ class Decoder:
         # Get all frequencies that surpass the threshold
         above_threshold_idx = np.where(pos_fft > THRESHOLD)[0]
         peak_freqs = pos_freq[above_threshold_idx]
-        print(peak_freqs)
+        #print(peak_freqs)
 
         fund_freq = " "
         if len(peak_freqs) > 0:
             fund_freq = min(piano_note_frequencies, key=lambda note: abs(piano_note_frequencies[note] - peak_freqs[0]))
             print(f"Detected note: {fund_freq}")
 
-            plt.figure(figsize=(12, 6))
-            plt.plot(freqs[:len(freqs) // 2], np.abs(fft_data[:len(fft_data) // 2]), color='royalblue',
-                     label='Original Spectrum')
-            plt.title('Original Spectrum')
-            plt.xlabel('Frequency (Hz)')
-            plt.ylabel('Magnitude')
-            plt.grid(True)
-            plt.show()
+            #plt.figure(figsize=(12, 6))
+            #plt.plot(freqs[:len(freqs) // 2], np.abs(fft_data[:len(fft_data) // 2]), color='royalblue',
+            #         label='Original Spectrum')
+            #plt.title('Original Spectrum')
+            #plt.xlabel('Frequency (Hz)')
+            #plt.ylabel('Magnitude')
+            #plt.grid(True)
+            #plt.show()
 
         return fund_freq
 
@@ -109,6 +110,28 @@ class Decoder:
         print(f"Decoded Notes: {decoded_notes}")
         return decoded_notes
 
+    def notes_to_words(self, notes):
+        result = {}
+
+        # Loop through all key mappings
+        for mapping_name, mapping_dict in key_mappings.items():
+            decoded_text = []
+            # Iterate through each note in the sequence
+            for note in notes:
+                letter_found = None
+                for letter, note_values in mapping_dict.items():
+                    # Check if the first element of key mappings dict matches the note
+                    if note_values[0] == note:
+                        letter_found = letter
+                        break
+                # Append letter to decoded text if found, otherwise add "?" for unknown notes
+                decoded_text.append(letter_found if letter_found else "?")
+
+            decoded_string = "".join(decoded_text)
+            result[mapping_name] = decoded_string
+
+        return result
+
     def play_note(self):
         sd.play(self.audio_data, self.sample_rate)
 
@@ -117,8 +140,10 @@ class Decoder:
 #    decoder.read_wav()
 #    decoder.filter_low_magnitude()
 #    decoder.save_filtered_audio()
-decoder = Decoder(f'assets/encoded_messages/hello_world_chord1.wav')
+decoder = Decoder(f'assets/encoded_messages/hello_world_chord2.wav')
 decoder.read_wav()
-decoder.audio_to_notes(0.5)
+decoded_notes = decoder.audio_to_notes(0.5)
+decoded_messages = decoder.notes_to_words(decoded_notes)
+print(decoded_messages)
 decoder.play_note()
 

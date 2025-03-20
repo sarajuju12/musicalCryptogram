@@ -2,10 +2,11 @@ import os
 
 import matplotlib.pyplot as plt
 import numpy as np
-import soundfile as sf
 import sounddevice as sd
+import soundfile as sf
 from scipy import fft
-from scipy.fft import fftfreq, ifft
+from scipy.fft import ifft
+from assets.key_mappings import key_mappings
 
 piano_note_frequencies = {'Db2': 69.2957, 'D2': 73.4162, 'Eb2': 77.7817, 'E2': 82.4069, 'F2': 87.3071, 'Gb2': 92.4986,
                           'G2': 97.9989, 'Ab2': 103.826, 'A2': 110.000, 'Bb2': 116.541, 'B2': 123.471, 'C3': 130.813,
@@ -18,7 +19,7 @@ piano_note_frequencies = {'Db2': 69.2957, 'D2': 73.4162, 'Eb2': 77.7817, 'E2': 8
                           'Db6': 1108.73, 'D6': 1174.66, 'Eb6': 1244.51, 'E6': 1318.51, 'F6': 1396.91, 'Gb6': 1479.98,
                           'G6': 1567.98, 'Ab6': 1661.22, 'A6': 1760.00, 'Bb6': 1864.66, 'B6': 1975.53, 'C7': 2093.00,
                           'Db7': 2217.46, 'D7': 2349.32, 'Eb7': 2489.02}
-THRESHOLD = 65
+THRESHOLD = 10
 
 
 class Decoder:
@@ -26,10 +27,8 @@ class Decoder:
         self.file_path = file_path
         self.audio_data = None
         self.sample_rate = None
-        self.fund_freq = None
 
     def filter_low_magnitude(self):
-        """Flatten all frequencies below the given magnitude threshold."""
         fft_data = fft.fft(self.audio_data)
         freqs = fft.fftfreq(len(self.audio_data), d=1 / self.sample_rate)
         magnitudes = np.abs(fft_data)
@@ -62,8 +61,17 @@ class Decoder:
         self.audio_data = audio_data
         self.sample_rate = sample_rate
 
-    def find_fund_freq(self):
-        fft_data = fft.fft(self.audio_data)
+    def segment_audio(self, note_duration=0.5):
+        # Find the number of segments, i.e. the number of characters, in the audio message
+        samples_per_note = int(self.sample_rate * note_duration)
+        num_segments = len(self.audio_data) // samples_per_note
+
+        # Split the audio data into equal-length segments
+        segments = np.array_split(self.audio_data, num_segments)
+        return segments, samples_per_note
+
+    def find_fund_freq(self, segment):
+        fft_data = fft.fft(segment)
         freqs = fft.fftfreq(len(fft_data), 1 / self.sample_rate)
 
         # Ignore negative frequencies
@@ -73,19 +81,56 @@ class Decoder:
         # Get all frequencies that surpass the threshold
         above_threshold_idx = np.where(pos_fft > THRESHOLD)[0]
         peak_freqs = pos_freq[above_threshold_idx]
-        print(peak_freqs)
+        #print(peak_freqs)
 
-        self.fund_freq = min(piano_note_frequencies, key=lambda note: abs(piano_note_frequencies[note] - peak_freqs[0]))
-        print(f"Detected note: {self.fund_freq}")
+        fund_freq = " "
+        if len(peak_freqs) > 0:
+            fund_freq = min(piano_note_frequencies, key=lambda note: abs(piano_note_frequencies[note] - peak_freqs[0]))
+            print(f"Detected note: {fund_freq}")
 
-        plt.figure(figsize=(12, 6))
-        plt.plot(freqs[:len(freqs) // 2], np.abs(fft_data[:len(fft_data) // 2]), color='royalblue',
-                 label='Original Spectrum')
-        plt.title('Original Spectrum')
-        plt.xlabel('Frequency (Hz)')
-        plt.ylabel('Magnitude')
-        plt.grid(True)
-        plt.show()
+            #plt.figure(figsize=(12, 6))
+            #plt.plot(freqs[:len(freqs) // 2], np.abs(fft_data[:len(fft_data) // 2]), color='royalblue',
+            #         label='Original Spectrum')
+            #plt.title('Original Spectrum')
+            #plt.xlabel('Frequency (Hz)')
+            #plt.ylabel('Magnitude')
+            #plt.grid(True)
+            #plt.show()
+
+        return fund_freq
+
+    def audio_to_notes(self, note_duration=0.5):
+        segments, _ = self.segment_audio(note_duration)
+        decoded_notes = []
+
+        for segment in segments:
+            note = self.find_fund_freq(segment)
+            decoded_notes.append(note)
+
+        print(f"Decoded Notes: {decoded_notes}")
+        return decoded_notes
+
+    def notes_to_words(self, notes):
+        result = {}
+
+        # Loop through all key mappings
+        for mapping_name, mapping_dict in key_mappings.items():
+            decoded_text = []
+            # Iterate through each note in the sequence
+            for note in notes:
+                letter_found = None
+                for letter, note_values in mapping_dict.items():
+                    # Check if the first element of key mappings dict matches the note
+                    if note_values[0] == note:
+                        letter_found = letter
+                        break
+                # Append letter to decoded text if found, otherwise add "?" for unknown notes
+                decoded_text.append(letter_found if letter_found else "?")
+
+            decoded_string = "".join(decoded_text)
+            result[mapping_name] = decoded_string
+
+        return result
 
     def play_note(self):
         sd.play(self.audio_data, self.sample_rate)
@@ -95,9 +140,10 @@ class Decoder:
 #    decoder.read_wav()
 #    decoder.filter_low_magnitude()
 #    decoder.save_filtered_audio()
-decoder = Decoder(f'assets/notes_flattened/Bb3.wav')
+decoder = Decoder(f'assets/encoded_messages/hello_world_chord2.wav')
 decoder.read_wav()
-#decoder.filter_low_magnitude()
-#decoder.save_filtered_audio()
+decoded_notes = decoder.audio_to_notes(0.5)
+decoded_messages = decoder.notes_to_words(decoded_notes)
+print(decoded_messages)
 decoder.play_note()
-decoder.find_fund_freq()
+

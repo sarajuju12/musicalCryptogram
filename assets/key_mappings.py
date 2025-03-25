@@ -50,32 +50,32 @@ Chord_1 = {
 }
 
 Chord_2 = { 
-    "a": ["C4", "E4", "G4"], # C Major Chord 
-    "b": ["E5", "Ab5", "B5"], # E Major Chord
-    "c": ["A5", "C6", "F6"], # F Major Chord 
-    "d": ["G3", "B3", "D4"], # G Major Chord
-    "e": ["D4", "G4", "B4"], # G Major Chord
-    "f": ["E3", "Ab3", "B3"],  # E Major Chord
-    "g": ["Ab4", "B4", "E5"], # E Major Chord
-    "h": ["B4", "D5", "G5"], # G Major Chord
-    "i": ["F3", "A3", "C4"],  # F Major Chord
-    "j": ["C3", "F3", "A3"], # F Major Chord  
-    "k": ["D3", "G3", "B3"], # G Major Chord
-    "l": ["B5", "E6", "Ab6"], # E Major Chord
-    "m": ["Ab5", "B5", "E6"], # E Major Chord
-    "n": ["F4", "A4", "C5"], # F Major Chord
-    "o": ["G5", "C6", "E6"], # C Major Chord 
-    "p": ["B3", "D4", "G4"], # G Major Chord
-    "q": ["D6", "G6", "B6"], # C Major Chord 
-    "r": ["C5", "E5", "G5"], # C Major Chord
-    "s": ["E4", "G4", "C5"], # C Major Chord
-    "t": ["F5", "A5", "C6"], # F Major Chord
-    "u": ["D5", "G5", "B5"], # G Major Chord
-    "v": ["A4", "C6", "F6"], # F Major Chord
-    "w": ["E6", "Ab6", "B6"], # E Major Chord
-    "x": ["A3", "C4", "F4"], # F Major Chord 
-    "y": ["C6", "E6", "G6"], # C Major Chord
-    "z": ["G4", "B4", "D5"], # G Major Chord
+    "a": ["C4", "E4", "G4"],
+    "b": ["E5", "Ab5", "B5"],
+    "c": ["A5", "C6", "F6"],
+    "d": ["G3", "B3", "D4"],
+    "e": ["D4", "G4", "B4"],
+    "f": ["E3", "Ab3", "B3"],
+    "g": ["Ab4", "B4", "E5"],
+    "h": ["B4", "D5", "G5"],
+    "i": ["F3", "A3", "C4"],
+    "j": ["C3", "F3", "A3"],
+    "k": ["D3", "G3", "B3"],
+    "l": ["B5", "E6", "Ab6"],
+    "m": ["Ab5", "B5", "E6"],
+    "n": ["F4", "A4", "C5"],
+    "o": ["G5", "C6", "E6"],
+    "p": ["B3", "D4", "G4"],
+    "q": ["D6", "G6", "B6"],
+    "r": ["C5", "E5", "G5"],
+    "s": ["E4", "G4", "C5"],
+    "t": ["F5", "A5", "C6"],
+    "u": ["D5", "G5", "B5"],
+    "v": ["A4", "C6", "F6"],
+    "w": ["E6", "Ab6", "B6"],
+    "x": ["A3", "C4", "F4"],
+    "y": ["C6", "E6", "G6"],
+    "z": ["G4", "B4", "D5"],
     " ": [" "]
 }
 

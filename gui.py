@@ -4,6 +4,7 @@ import wave
 import io
 import os
 from assets.key_mappings import key_mappings
+from decoder import *
 
 
 # Generate a silent waveform (pause) for the given duration
@@ -85,21 +86,33 @@ mode = st.radio("Choose Mode:", ["Encode Text to WAV", "Decode WAV to Text"])
 if mode == "Encode Text to WAV":
     key = st.selectbox("Choose Encryption Key:", ["C-G-Am-F", "C-F-G-E", "Cm-Gm-Dm-Am", "Chord_1", "Chord_2"])
     text = st.text_area("Enter text to encode:")
+    filename = st.text_input("Enter filename:", placeholder="encoded_audio")
+
+    if not filename:
+        filename= "encoded_audio"
+
     if st.button("Generate WAV"):
         if text:
             dict = key_mappings.get(key)
             wav_data = text_to_wav(text, dict)
             st.audio(wav_data, format="audio/wav")
-            st.download_button("Download WAV", wav_data, "encoded_audio.wav", "audio/wav")
+            st.download_button("Download WAV", wav_data, f"{filename}.wav", "audio/wav")
         else:
             st.warning("Please enter some text.")
 
 elif mode == "Decode WAV to Text":
     uploaded_file = st.file_uploader("Upload WAV file", type=["wav"])
     if uploaded_file:
-        wav_data = uploaded_file.read()
-        decoded_text = wav_to_text(wav_data)
-        st.text_area("Decoded Text:", decoded_text, height=100)
+        decoder = Decoder(uploaded_file)
+        decoder.read_wav()
+        decoded_notes = decoder.audio_to_notes(0.5)
+        decoded_text = decoder.notes_to_words(decoded_notes)
+        st.text_area("Decoded Text: ", decoded_text, height=100)
+        # print(decoded_messages)
+        # decoder.play_note()
+        # wav_data = uploaded_file.read()
+        # decoded_text = wav_to_text(wav_data)
+        # st.text_area("Decoded Text:", decoded_text, height=100)
 
 # troubles so far
 # combining notes to make a chord lead to a high-pitched shrill sound

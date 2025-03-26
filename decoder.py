@@ -110,27 +110,21 @@ class Decoder:
         print(f"Decoded Notes: {decoded_notes}")
         return decoded_notes
 
-    def notes_to_words(self, notes):
-        result = {}
+    def notes_to_words(self, notes, key):
 
-        # Loop through all key mappings
-        for mapping_name, mapping_dict in key_mappings.items():
-            decoded_text = []
-            # Iterate through each note in the sequence
-            for note in notes:
-                letter_found = None
-                for letter, note_values in mapping_dict.items():
-                    # Check if the first element of key mappings dict matches the note
-                    if note_values[0] == note:
-                        letter_found = letter
-                        break
-                # Append letter to decoded text if found, otherwise add "?" for unknown notes
-                decoded_text.append(letter_found if letter_found else "?")
+        mapping_dict = key_mappings[key]
+        decoded_text = [] 
 
-            decoded_string = "".join(decoded_text)
-            result[mapping_name] = decoded_string
+        for note in notes:
+            letter_found = None
+            for letter, note_values in mapping_dict.items():
+                if note == note_values[0]:
+                    letter_found = letter
+                    break
+                 
+            decoded_text.append(letter_found if letter_found else "?")
 
-        return result
+        return "".join(decoded_text) 
 
     def play_note(self):
         sd.play(self.audio_data, self.sample_rate)

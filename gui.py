@@ -101,12 +101,13 @@ if mode == "Encode Text to WAV":
             st.warning("Please enter some text.")
 
 elif mode == "Decode WAV to Text":
+    key = st.selectbox("Choose Decryption Key:", ["C-G-Am-F", "C-F-G-E", "Cm-Gm-Dm-Am", "Chord_1", "Chord_2"])
     uploaded_file = st.file_uploader("Upload WAV file", type=["wav"])
     if uploaded_file:
         decoder = Decoder(uploaded_file)
         decoder.read_wav()
         decoded_notes = decoder.audio_to_notes(0.5)
-        decoded_text = decoder.notes_to_words(decoded_notes)
+        decoded_text = decoder.notes_to_words(decoded_notes, key)
         st.text_area("Decoded Text: ", decoded_text, height=100)
         # print(decoded_messages)
         # decoder.play_note()

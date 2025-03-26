@@ -79,7 +79,80 @@ def wav_to_text(wav_data):
 # Streamlit UI
 st.set_page_config(page_title="Musical Text Encoder/Decoder", layout="centered")
 
-st.title("🎵 CryptTunes: A Musical Text Encoder & Decoder")
+# ---- CUSTOM CSS ANIMATION ----
+st.markdown("""
+    <style>
+        /* Background Color */
+        html, body, .stApp {
+            background-color: white;
+            color: black;
+            overflow: hidden;
+        }
+            
+        .custom-title {
+            font-size: 40px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 50px;
+            color: #333333;
+            background: transparent;
+            # transition: all 0.6s ease-in-out;
+            transition: color 0.6s ease-out, transform 0.6s ease-in-out, text-shadow 0.6s ease-in-out, background 0.6s ease-in-out;
+        }
+
+        .custom-title:hover {
+            background: linear-gradient(45deg, #FF6347, #FFD700); /* Gradient color on hover */
+            -webkit-background-clip: text; /* Clip the background to the text */
+            color: transparent; /* Make text color transparent to show the gradient */
+            transform: scale(1.1); /* Slightly grow the title */
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+        }
+            
+        /* Floating Animation */
+        @keyframes floatNotes {
+            0% { transform: translateY(0) scale(1); opacity: 0; }    /* Start faded */
+            20% { opacity: 0.75; }                                       /* Fade in */
+            50% { transform: translateY(-80px) scale(1.2); opacity: 0.6; }  /* Float up */
+            80% { transform: translateY(-50px) scale(1); opacity: 0.5; }                   
+            100% { transform: translateY(-100px) scale(1.3); opacity: 0; } /* Fade out */
+        }
+
+        /* Notes Style */
+        .note {
+            bottom: 0;
+            position: fixed;
+            font-size: 65px;
+            animation: floatNotes 7s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        /* Randomized Positions */
+        .note:nth-child(1) { left: 5%; animation-delay: 0s; }
+        .note:nth-child(2) { left: 20%; animation-delay: 1s; }
+        .note:nth-child(3) { left: 35%; animation-delay: 2s; }
+        .note:nth-child(4) { left: 50%; animation-delay: 1.5s; }
+        .note:nth-child(5) { left: 65%; animation-delay: 2.5s; }
+        .note:nth-child(6) { left: 80%; animation-delay: 0.5s; }
+        .note:nth-child(7) { left: 90%; animation-delay: 3s; }
+
+    </style>
+            
+    <div class="custom-title">
+        🎵 CryptTunes: A Musical Text <br> Encoder & Decoder
+    </div>
+
+    <div class="music-notes">
+        <div class="note">🎵</div>
+        <div class="note">🎶</div>
+        <div class="note">♫</div>
+        <div class="note">♬</div>
+        <div class="note">🎶</div>
+        <div class="note">♫</div>
+        <div class="note">🎵</div>
+    </div>
+""", unsafe_allow_html=True)
+
+# st.title("🎵 CryptTunes: A Musical Text Encoder & Decoder")
 
 mode = st.radio("Choose Mode:", ["Encode Text to WAV", "Decode WAV to Text"])
 
@@ -114,12 +187,3 @@ elif mode == "Decode WAV to Text":
         # wav_data = uploaded_file.read()
         # decoded_text = wav_to_text(wav_data)
         # st.text_area("Decoded Text:", decoded_text, height=100)
-
-# troubles so far
-# combining notes to make a chord lead to a high-pitched shrill sound
-# used + instead of np.sum, works but believe experiencing clipping noise (may need to normalize)
-# idea: lower decibel levels of each note, once everything is combined, normalize it
-
-# Need to do
-# create two other chords
-# lower decibel levels + normalize

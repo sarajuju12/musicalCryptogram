@@ -5,6 +5,7 @@ import io
 import os
 from assets.key_mappings import key_mappings
 from decoder import *
+from llm import LLMScorer
 
 
 # Generate a silent waveform (pause) for the given duration
@@ -174,14 +175,28 @@ if mode == "Encode Text to WAV":
             st.warning("Please enter some text.")
 
 elif mode == "Decode WAV to Text":
-    key = st.selectbox("Choose Decryption Key:", ["C-G-Am-F", "C-F-G-E", "Cm-Gm-Dm-Am", "Chord_1", "Chord_2"])
+    llm_scorer = LLMScorer()
+    keys = ["C-G-Am-F", "C-F-G-E", "Cm-Gm-Dm-Am", "Chord_1", "Chord_2"]
+    # key = st.selectbox("Choose Decryption Key:", ["C-G-Am-F", "C-F-G-E", "Cm-Gm-Dm-Am", "Chord_1", "Chord_2"])
     uploaded_file = st.file_uploader("Upload WAV file", type=["wav"])
     if uploaded_file:
         decoder = Decoder(uploaded_file)
         decoder.read_wav()
-        decoded_notes = decoder.audio_to_notes(0.5)
-        decoded_text = decoder.notes_to_words(decoded_notes, key)
-        st.text_area("Decoded Text: ", decoded_text, height=100)
+        all_decoded_words = []
+        for key in keys:
+            decoded_notes = decoder.audio_to_notes(0.5)
+            decoded_text = decoder.notes_to_words(decoded_notes, key)
+            all_decoded_words.append(decoded_text)
+        # Use LLM to get the best text
+        best_text, scores = llm_scorer.get_best_text(all_decoded_words)
+        sorted_words = [word for word, _ in sorted(scores.items(), key=lambda x: x[1], reverse=True)]
+        # Format the output text
+        output_text = "\n".join(sorted_words)
+        # Display Results
+        st.text_area("Ranked Decoded Text (Most Likely at Top):", output_text, height=150)
+
+        # decoded_text = f"Best Decoded Text: {best_text}\n\nScores: {scores}"
+        # st.text_area("Decoded Text: ", decoded_text, height=100)
         # print(decoded_messages)
         # decoder.play_note()
         # wav_data = uploaded_file.read()

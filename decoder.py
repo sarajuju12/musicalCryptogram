@@ -19,7 +19,7 @@ piano_note_frequencies = {'Db2': 69.2957, 'D2': 73.4162, 'Eb2': 77.7817, 'E2': 8
                           'Db6': 1108.73, 'D6': 1174.66, 'Eb6': 1244.51, 'E6': 1318.51, 'F6': 1396.91, 'Gb6': 1479.98,
                           'G6': 1567.98, 'Ab6': 1661.22, 'A6': 1760.00, 'Bb6': 1864.66, 'B6': 1975.53, 'C7': 2093.00,
                           'Db7': 2217.46, 'D7': 2349.32, 'Eb7': 2489.02}
-THRESHOLD = 15
+THRESHOLD = 11
 
 
 class Decoder:
@@ -134,10 +134,10 @@ class Decoder:
 #    decoder.read_wav()
 #    decoder.filter_low_magnitude()
 #    decoder.save_filtered_audio()
-# decoder = Decoder(f'assets/encoded_messages/test_C-F-G-E.wav')
+# decoder = Decoder(f'assets/encoded_messages/special_combo2.wav')
 # decoder.read_wav()
 # decoded_notes = decoder.audio_to_notes(0.5)
-# decoded_messages = decoder.notes_to_words(decoded_notes)
+# decoded_messages = decoder.notes_to_words(decoded_notes, 'Combo_2')
 # print(decoded_messages)
 # decoder.play_note()
 

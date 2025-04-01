@@ -107,7 +107,7 @@ class Decoder:
             note = self.find_fund_freq(segment)
             decoded_notes.append(note)
 
-        print(f"Decoded Notes: {decoded_notes}")
+        # print(f"Decoded Notes: {decoded_notes}")
         return decoded_notes
 
     def notes_to_words(self, notes, key):

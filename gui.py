@@ -97,6 +97,8 @@ if mode == "Encode Text to WAV":
             encoder = Encoder(dict, text)
             if effect == "Enhance":
                 wav_data = encoder.text_to_wav_enhance()
+            elif effect == "Legato":
+                wav_data = encoder.text_to_wav_legato()
             else:
                 wav_data = encoder.text_to_wav()
             st.audio(wav_data, format="audio/wav")

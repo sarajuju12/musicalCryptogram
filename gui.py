@@ -84,7 +84,7 @@ mode = st.radio("Choose Mode:", ["Encode Text to WAV", "Decode WAV to Text"])
 
 if mode == "Encode Text to WAV":
     key = st.selectbox("Choose Encryption Key:", ["C-G-Am-F", "C-F-G-E", "Cm-Gm-Dm-Am", "Chord_1", "Chord_2", "Combo_1", "Combo_2"])
-    effect = st.selectbox("Choose Effect:", ["None", "Enhance", "Legato"])
+    effect = st.selectbox("Choose Effect:", ["None", "Legato"])
     text = st.text_area("Enter text to encode:")
     filename = st.text_input("Enter filename:", placeholder="encoded_audio")
 
@@ -95,9 +95,7 @@ if mode == "Encode Text to WAV":
         if text:
             dict = key_mappings.get(key)
             encoder = Encoder(dict, text)
-            if effect == "Enhance":
-                wav_data = encoder.text_to_wav_enhance()
-            elif effect == "Legato":
+            if effect == "Legato":
                 wav_data = encoder.text_to_wav_legato()
             else:
                 wav_data = encoder.text_to_wav()
@@ -108,7 +106,7 @@ if mode == "Encode Text to WAV":
 
 elif mode == "Decode WAV to Text":
     llm_scorer = LLMScorer()
-    keys = ["C-G-Am-F", "C-F-G-E", "Cm-Gm-Dm-Am", "Chord_1", "Chord_2"]
+    keys = ["C-G-Am-F", "C-F-G-E", "Cm-Gm-Dm-Am", "Chord_1", "Chord_2", "Combo_1", "Combo_2"]
     # key = st.selectbox("Choose Decryption Key:", ["C-G-Am-F", "C-F-G-E", "Cm-Gm-Dm-Am", "Chord_1", "Chord_2"])
     uploaded_file = st.file_uploader("Upload WAV file", type=["wav"])
     if uploaded_file:
